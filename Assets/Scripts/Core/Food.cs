@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Food : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private int _scoreCost;
 
-    // Update is called once per frame
-    void Update()
+    public void Collect()
     {
-        
+        Destroy(gameObject);
     }
 }
