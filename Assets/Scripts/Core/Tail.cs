@@ -13,6 +13,11 @@ public class Tail : MonoBehaviour
         _speed = speed;
         _target = target;
     }
+
+    private void Awake()
+    {
+        transform.position = _target.transform.forward * -minDist;
+    }
     
     private void Update()
     {
