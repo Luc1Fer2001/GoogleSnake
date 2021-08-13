@@ -20,7 +20,7 @@ public class Snake : MonoBehaviour
 
     private void MoveSnake(Vector3 newPosition)
     {
-        float sqrDistance = _tailDistance * _tailDistance;
+        /*float sqrDistance = _tailDistance * _tailDistance;
         Vector3 previousPosition = _snakeTransform.position;
 
         foreach (var tail in _tails)
@@ -36,7 +36,7 @@ public class Snake : MonoBehaviour
             {
                 break;
             }
-        }
+        }*/
         _snakeTransform.position = newPosition;
     }
 
@@ -48,7 +48,9 @@ public class Snake : MonoBehaviour
             GetComponent<Animator>().SetTrigger("Eat");
             Destroy(collision.gameObject);
             Vector3 spawnPosition = _tails[_tails.Count - 1].position;
-            var tail = Instantiate(_tailPrefab, spawnPosition, Quaternion.identity);
+            var tail = Instantiate(_tailPrefab);
+            var tailMove = tail.GetComponent<Tail>();
+            tailMove.SetParameters(1, _tails[_tails.Count - 1].gameObject);
             _tails.Add(tail.transform);
         }
     }
