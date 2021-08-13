@@ -6,6 +6,7 @@ public class Tail : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private GameObject _target;
+    [SerializeField] private float minDist;
 
     public void SetParameters( float speed, GameObject target)
     {
@@ -21,6 +22,7 @@ public class Tail : MonoBehaviour
     private void MoveTail()
     {
         transform.LookAt(_target.transform);
-        transform.position = Vector3.Lerp(transform.position, new Vector3(_target.transform.position.x, 0.3f, _target.transform.position.z), Time.deltaTime * _speed);
+        var dist = Vector3.Distance(transform.position, target.transform.position);
+        transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, dist - minDist);
     }
 }
