@@ -3,14 +3,26 @@ using UnityEngine;
 
 public class GenerationPoolFoods : MonoBehaviour
 {
-    [SerializeField] private GameObject _foodPrefab;
+    public static GenerationPoolFoods Instance;
+
+    [SerializeField] private GameObject _defaultFoodPrefab;
+    [SerializeField] private GameObject _redFoodPrefab;
+
+    [SerializeField] private int _defaultFoodCount;
+    [SerializeField] private int _redFoodCount;
 
     [SerializeField] private int _poolSize;
 
-    private List<GameObject> _foods = new List<GameObject>();
+    private List<IFood> _foods = new List<IFood>();
+    private List<IFood> _destroyedFood = new List<IFood>();
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+
         FillPool();
     }
 
@@ -18,9 +30,19 @@ public class GenerationPoolFoods : MonoBehaviour
     {
         for (int i = 0; i < _poolSize; i++)
         {
-            var food = Instantiate(_foodPrefab);
+            var food = Instantiate(_defaultFoodPrefab);
             food.SetActive(false);
-            _foods.Add(food);
+            _foods.Add(food.GetComponent<IFood>());
+        }
+    }
+
+    public void DestroyFood(GameObject targetFood)
+    {
+        if (TryGetComponent(out IFood food))
+        {
+            targetFood.SetActive(false);
+            _foods.Remove(food);
+            _destroyedFood.Add(food);
         }
     }
 

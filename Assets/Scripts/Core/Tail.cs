@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Tail : MonoBehaviour
@@ -7,12 +5,12 @@ public class Tail : MonoBehaviour
     [SerializeField] private GameObject _target;
     [SerializeField] private float _minDist;
 
-    public void SetParameters( float speed, GameObject target)
+    public void SetParameters(float speed, GameObject target)
     {
         _target = target;
         transform.position = _target.transform.forward * -_minDist;
     }
-    
+
     private void Update()
     {
         MoveTail();

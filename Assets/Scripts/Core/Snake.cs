@@ -25,7 +25,7 @@ public class Snake : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent<Food>( out Food food))
+        if (collision.gameObject.TryGetComponent<IFood>(out IFood food))
         {
             GetComponent<Animator>().SetTrigger("Eat");
             food.Collect();
