@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Utility;
 
 namespace SmartValues
 {
@@ -100,7 +99,10 @@ namespace SmartValues
                 {
                     _value = i;
                 }
-                else break;
+                else
+                {
+                    break;
+                }
             }
             OnValueUpdate?.Invoke(_value.Value);
         }
@@ -248,53 +250,6 @@ namespace SmartValues
         private void Clear(Scene from, Scene to)
         {
             Value = new T();
-        }
-    }
-
-    public class BsonObject<T> where T : new()
-    {
-        private T _value;
-
-        System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-
-        public T Value
-        {
-            get => _value;
-            set => _value = value;
-        }
-
-        private readonly string _name;
-
-        public void Save()
-        {
-            sw.Start();
-            BsonUtility.ToFiles(_name, _value);
-            sw.Stop();
-            Debug.Log("Serialization of BSON " + _name +" lasted " + TimeSpan.FromTicks(sw.ElapsedTicks).TotalMilliseconds.ToString("F") + " miliseconds.");
-            sw.Reset();
-        }
-
-        public BsonObject(string name)
-        {
-            _name = name;
-            try
-            {
-                sw.Start();
-                _value = BsonUtility.FromFiles<T>(_name);
-                sw.Stop();
-                Debug.Log("Deserialization of BSON " + _name + " lasted " + TimeSpan.FromTicks(sw.ElapsedTicks).TotalMilliseconds.ToString("F") + " miliseconds.");
-                sw.Reset();
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-                _value = new T();
-            }
-            finally
-            {
-                if (_value == null)
-                    _value = new T();
-            }
         }
     }
 }

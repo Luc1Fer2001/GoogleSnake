@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e3133027398d024bbb070d824f549b9, type: 3}
+  m_Name: XPToLevel
+  m_EditorClassIdentifier: 
+  _playerData: {fileID: 11400000, guid: eb686c90ad3904a46bc1be46d2b5834e, type: 2}
+  _xpToUpdateLevel:
+  - Level: 0
+    Xp: 50
+  - Level: 1
+    Xp: 100
+  - Level: 2
+    Xp: 150
+  - Level: 3
+    Xp: 250
+  - Level: 4
+    Xp: 350
+  - Level: 5
+    Xp: 500
+  - Level: 6
+    Xp: 750
+  - Level: 7
+    Xp: 1000
+  - Level: 8
+    Xp: 1250
+  - Level: 9
+    Xp: 1750
