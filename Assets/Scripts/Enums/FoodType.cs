@@ -1,5 +1,8 @@
-﻿public enum FoodType
+﻿namespace Assets.Scripts.Enums
 {
-    GreenMemory,
-    RedMemory
+    public enum FoodType
+    {
+        GreenMemory,
+        RedMemory
+    }
 }

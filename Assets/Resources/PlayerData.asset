@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f42408aa29f7628438652e3f6ad937da, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  _xpToLevel: {fileID: 0}
-  _foodTypeToLevel: {fileID: 0}
+  _xpToLevel: {fileID: 11400000, guid: 36adcb51c23db4e4f82ec183def686de, type: 2}

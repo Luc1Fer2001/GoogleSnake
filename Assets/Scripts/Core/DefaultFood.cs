@@ -1,12 +1,16 @@
+using Assets.Scripts.Enums;
 using UnityEngine;
 
-public class DefaultFood : MonoBehaviour, IFood
+namespace Assets.Scripts.Core
 {
-    public int scoreAmount { get; }
-    public FoodType foodType { get; }
-
-    public void Collect()
+    public class DefaultFood : MonoBehaviour, IFood
     {
-        Destroy(gameObject);
+        public int ScoreAmount { get; }
+        public FoodType FoodType { get; }
+
+        public void Collect()
+        {
+            Destroy(gameObject);
+        }
     }
 }

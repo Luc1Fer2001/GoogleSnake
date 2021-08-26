@@ -1,37 +1,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Snake : MonoBehaviour
+namespace Assets.Scripts.Core
 {
-    [SerializeField] private float _tailDistance;
-    [SerializeField] private GameObject _tailPrefab;
-    [SerializeField] private List<Transform> _tails = new List<Transform>();
-    [SerializeField] private float _speed;
-
-
-    private void Update()
+    public class Snake : MonoBehaviour
     {
-        MoveSnake(transform.position + transform.forward * _speed);
-
-        float angel = Input.GetAxis("Horizontal") * 2;
-        transform.Rotate(0, angel, 0);
-    }
-
-    private void MoveSnake(Vector3 newPosition)
-    {
-        transform.position = newPosition;
-    }
+        [SerializeField] private GameObject _tailPrefab;
+        [SerializeField] private readonly List<Transform> _tails = new List<Transform>();
+        [SerializeField] private float _speed;
+        private string _nameAnimatorTrigger = "Eat";
 
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.TryGetComponent<IFood>(out IFood food))
+        private void Update()
         {
-            GetComponent<Animator>().SetTrigger("Eat");
+            MoveSnake(transform.position + (transform.forward * _speed));
+
+            float angel = Input.GetAxis("Horizontal") * 2;
+            transform.Rotate(0, angel, 0);
+        }
+
+        private void MoveSnake(Vector3 newPosition)
+        {
+            transform.position = newPosition;
+        }
+
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (!collision.gameObject.TryGetComponent<IFood>(out var food))
+            {
+                return;
+            }
+
+            GetComponent<Animator>().SetTrigger(_nameAnimatorTrigger);
             food.Collect();
             var tail = Instantiate(_tailPrefab);
             var tailMove = tail.GetComponent<Tail>();
-            tailMove.SetParameters(1, _tails[_tails.Count - 1].gameObject);
+            tailMove.SetParameters(_tails[_tails.Count - 1].gameObject);
             _tails.Add(tail.transform);
         }
     }

@@ -1,7 +1,9 @@
-﻿public interface IFood
+﻿using Assets.Scripts.Enums;
+
+public interface IFood
 {
-    public int scoreAmount { get; }
-    public FoodType foodType { get; }
-    public void Collect();
+    int ScoreAmount { get; }
+    FoodType FoodType { get; }
+    void Collect();
 
 }

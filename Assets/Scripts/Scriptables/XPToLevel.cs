@@ -1,63 +1,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "XPToLevel", menuName = "ScriptableObjects/XPToLevel", order = 6)]
-public class XPToLevel : ScriptableObject
+namespace Assets.Scripts.Scriptables
 {
-    [SerializeField] private PlayerData _playerData;
-    [SerializeField] private List<XPToLevelTable> _xpToUpdateLevel = new List<XPToLevelTable>();
-
-    public List<XPToLevelTable> XPToLevelTables => _xpToUpdateLevel;
-
-    public static System.Action<int> OnLevelChanged;
-
-    private int _level;
-    public int Level
+    [CreateAssetMenu(fileName = "XPToLevel", menuName = "ScriptableObjects/XPToLevel", order = 6)]
+    public class XPToLevel : ScriptableObject
     {
-        get => _level;
-        private set
-        {
-            _level = value;
-            OnLevelChanged?.Invoke(value);
-        }
-    }
+        [SerializeField] private PlayerData _playerData;
 
-    private List<int> _levelsList;
+        [SerializeField]
+        public List<XPToLevelTable> XPToLevelTables { get; } = new List<XPToLevelTable>();
 
-    public List<int> LevelsList
-    {
-        get
+        public static System.Action<int> OnLevelChanged;
+
+        private int _level;
+        public int Level
         {
-            foreach (var level in _xpToUpdateLevel)
+            get => _level;
+            private set
             {
-                _levelsList.Add(level.Level);
-            }
-            return _levelsList;
-        }
-    }
-
-    private void Awake()
-    {
-        _playerData.Xp.OnValueUpdate += SetLevel;
-    }
-
-    private void SetLevel(int xp)
-    {
-        int level = 0;
-        for (int i = 0; i < _xpToUpdateLevel.Count; i++)
-        {
-            if (xp >= _xpToUpdateLevel[i].Xp)
-            {
-                level = i;
+                _level = value;
+                OnLevelChanged?.Invoke(value);
             }
         }
-        Level = level;
-    }
-}
 
-[System.Serializable]
-public class XPToLevelTable
-{
-    public int Level;
-    public int Xp;
+        private List<int> _levelsList;
+
+        public List<int> LevelsList
+        {
+            get
+            {
+                foreach (var level in XPToLevelTables)
+                {
+                    _levelsList.Add(level.Level);
+                }
+                return _levelsList;
+            }
+        }
+
+        private void Awake()
+        {
+            _playerData.Xp.OnValueUpdate += SetLevel;
+        }
+
+        private void SetLevel(int xp)
+        {
+            int level = 0;
+            for (int i = 0; i < XPToLevelTables.Count; i++)
+            {
+                if (xp >= XPToLevelTables[i].Xp)
+                {
+                    level = i;
+                }
+            }
+            Level = level;
+        }
+    }
+
+    [System.Serializable]
+    public class XPToLevelTable
+    {
+        public int Level;
+        public int Xp;
+    }
 }
